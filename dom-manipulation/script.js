@@ -11,11 +11,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function showRandomQuote() {
     if (quotes.length === 0) {
-      quoteDisplay.textContent = "No quotes available. Add some!";
+      quoteDisplay.innerHTML = "No quotes available. Add some!";
       return;
     }
     const randomIndex = Math.floor(Math.random() * quotes.length);
-    quoteDisplay.textContent = `${quotes[randomIndex].text} - (${quotes[randomIndex].category})`;
+    quoteDisplay.innerHTML = `${quotes[randomIndex].text} - (${quotes[randomIndex].category})`;
   }
 
   newQuoteBtn.addEventListener("click", showRandomQuote);
