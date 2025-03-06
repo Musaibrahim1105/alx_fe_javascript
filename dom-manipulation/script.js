@@ -97,8 +97,8 @@ document.addEventListener("DOMContentLoaded", function () {
     alert("Quote added successfully!");
   }
 
-  function fetchQuotesFromServer() {
-    fetch("https://jsonplaceholder.typicode.com/posts")
+ async function fetchQuotesFromServer() {
+    let result = await fetch("https://jsonplaceholder.typicode.com/posts")
       .then(response => response.json())
       .then(serverQuotes => {
         const serverData = serverQuotes.map(q => ({ text: q.title, category: "General" }));
