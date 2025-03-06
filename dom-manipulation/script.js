@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function saveQuotes() {
     localStorage.setItem("quotes", JSON.stringify(quotes));
     populateCategories();
+    syncWithServer();
   }
 
   function showRandomQuote() {
@@ -96,13 +97,27 @@ document.addEventListener("DOMContentLoaded", function () {
     alert("Quote added successfully!");
   }
 
+  function syncWithServer() {
+    fetch("https://jsonplaceholder.typicode.com/posts")
+      .then(response => response.json())
+      .then(serverQuotes => {
+        const serverData = serverQuotes.map(q => ({ text: q.title, category: "General" }));
+        quotes = [...quotes, ...serverData];
+        saveQuotes();
+      })
+      .catch(error => console.error("Error syncing with server:", error));
+  }
+
   createAddQuoteForm();
   populateCategories();
   filterQuotes();
+  syncWithServer();
   const lastQuote = JSON.parse(sessionStorage.getItem("lastQuote"));
   if (lastQuote) {
     quoteDisplay.textContent = `${lastQuote.text} - (${lastQuote.category})`;
   } else {
     showRandomQuote();
   }
-})
+
+  setInterval(syncWithServer, 30000);
+});
