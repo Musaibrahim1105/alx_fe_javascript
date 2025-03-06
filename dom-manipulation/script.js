@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
     alert("Quote added successfully!");
   }
 
-  function syncWithServer() {
+  function fetchQuotesFromServer() {
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then(response => response.json())
       .then(serverQuotes => {
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
   createAddQuoteForm();
   populateCategories();
   filterQuotes();
-  syncWithServer();
+  fetchQuotesFromServer();
   const lastQuote = JSON.parse(sessionStorage.getItem("lastQuote"));
   if (lastQuote) {
     quoteDisplay.textContent = `${lastQuote.text} - (${lastQuote.category})`;
@@ -119,5 +119,5 @@ document.addEventListener("DOMContentLoaded", function () {
     showRandomQuote();
   }
 
-  setInterval(syncWithServer, 30000);
+  setInterval(fetchQuotesFromServer, 30000);
 });
